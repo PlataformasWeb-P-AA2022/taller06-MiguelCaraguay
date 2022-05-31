@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo Jquery y JqueryUI</title>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes /base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+</script>
+</head>
+<body>
+    <div id="accordion">
+    </div>
+</body>
+  <script>
+  $(document).ready(function() {
+        var nombre_canton = $("#nombre_pais").val();
+        $.ajax({
+            // type: "POST",
+            dataType: 'json',
+                url: 'http://127.0.0.1:5984/provincias/_all_docs?include_docs=true'
+            }).then(function(data) {
+              var cadena = '';
+              for(var i=0; i<data.rows.length; i++){
+                  var provincia = data.rows[i].doc.provincia;
+                  var url = data.rows[i].doc.url;
+                  var img = data.rows[i].doc.img;
+                  cadena = cadena + "<h3>"+ provincia +"</h3>";
+                  cadena = cadena + "<div> <p><a href='"+url+"'>"+ provincia +"</a></p>";
+                  cadena = cadena + "<img src='"+img+"'> </div>";
+              }
+              $('#accordion').append(cadena);
+              $( "#accordion" ).accordion();
+        }); 
+    });
+
+</script>
+</html>
